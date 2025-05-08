@@ -1,0 +1,44 @@
+{
+  "todos": [
+    {
+      "id": "2",
+      "title": "Set up json-server",
+      "completed": true
+    },
+    {
+      "id": "8515",
+      "title": "3333",
+      "completed": true
+    },
+    {
+      "id": "fed4",
+      "title": "213123123",
+      "completed": true
+    },
+    {
+      "id": "3086",
+      "title": "333",
+      "completed": false
+    },
+    {
+      "id": "62f2",
+      "title": "rgrg",
+      "completed": false
+    },
+    {
+      "id": "3735",
+      "title": "444",
+      "completed": false
+    },
+    {
+      "id": "ad14",
+      "title": "44",
+      "completed": false
+    },
+    {
+      "id": "d5ab",
+      "title": "4ㅅ4ㅅ4",
+      "completed": false
+    }
+  ]
+}
