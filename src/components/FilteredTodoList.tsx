@@ -4,9 +4,9 @@ import { useTodos } from '../hooks/useTodos';
 import TodoItem from './TodoItem';
 
 const FilteredTodoList: React.FC = () => {
-  const { todos ,fetchTodos} = useTodos();
+  const { todos ,} = useTodos();
   const [filter, setFilter] = useState<'all' | 'completed' | 'uncompleted'>('all');
-
+  const { fetchTodos } = useTodos(); 
   const handleFilterChange = (value: 'all' | 'completed' | 'uncompleted') => {
     startTransition(() => {
       setFilter(value);
