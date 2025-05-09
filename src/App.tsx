@@ -4,7 +4,9 @@ import { RecoilRoot } from 'recoil';
 import ErrorBoundary from './components/ErrorBoundary';
 import './index.css';
 
-const FilteredTodoList = React.lazy(() => import('./components/FilteredTodoList'));
+const FilteredTodoList = React.lazy(
+  () => import('./components/FilteredTodoList'),
+);
 const TodoModal = React.lazy(() => import('./components/TodoModal'));
 
 const App: React.FC = () => {
@@ -27,7 +29,10 @@ const App: React.FC = () => {
           {/* 🔥 Suspense로 Lazy 로딩 */}
           <Suspense fallback={<div>Loading Modal...</div>}>
             {isModalOpen && (
-              <TodoModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
+              <TodoModal
+                isOpen={isModalOpen}
+                onClose={() => setModalOpen(false)}
+              />
             )}
           </Suspense>
 

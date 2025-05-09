@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 
 interface ErrorBoundaryProps {
   fallback: ReactNode;
-  children: ReactNode;  // 🔥 children 추가
+  children: ReactNode; // 🔥 children 추가
 }
 
 interface ErrorBoundaryState {
@@ -11,7 +11,10 @@ interface ErrorBoundaryState {
   error: Error | null;
 }
 
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class ErrorBoundary extends React.Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false, error: null };
@@ -22,7 +25,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error("🚨 Error caught in ErrorBoundary:", error, errorInfo);
+    console.error('🚨 Error caught in ErrorBoundary:', error, errorInfo);
   }
 
   render() {
@@ -40,7 +43,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
         </div>
       );
     }
-    return this.props.children;  // 🔥 children이 없었던 부분 수정
+    return this.props.children; // 🔥 children이 없었던 부분 수정
   }
 }
 

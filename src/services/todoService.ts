@@ -4,7 +4,7 @@ import axios from 'axios';
 const API_URL = 'http://localhost:5001/todos';
 
 export const fetchTodos = async () => {
-  console.log("🔍 Fetching todos from API...");
+  console.log('🔍 Fetching todos from API...');
   const response = await axios.get(API_URL);
   return response.data;
 };
