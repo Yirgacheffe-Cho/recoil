@@ -1,44 +1,101 @@
 {
-  "todos": [
+  "schedules": [
+    {
+      "id": "1",
+      "title": "팀 회의",
+      "description": "주간 팀 회의",
+      "dueDate": "2025-05-15T10:00:00.000Z",
+      "priority": "high",
+      "repeat": false,
+      "category": "Work",
+      "tags": [
+        "Meeting",
+        "Team"
+      ],
+      "completed": false
+    },
     {
       "id": "2",
-      "title": "Set up json-server",
-      "completed": true
-    },
-    {
-      "id": "8515",
-      "title": "3333",
-      "completed": true
-    },
-    {
-      "id": "fed4",
-      "title": "213123123",
-      "completed": true
-    },
-    {
-      "id": "3086",
-      "title": "333",
+      "title": "스터디 그룹",
+      "description": "React Study",
+      "dueDate": "2025-05-18T18:00:00.000Z",
+      "priority": "normal",
+      "repeat": false,
+      "category": "Study",
+      "tags": [
+        "Study",
+        "React"
+      ],
       "completed": false
     },
     {
-      "id": "62f2",
-      "title": "rgrg",
+      "id": "3",
+      "title": "프로젝트 리뷰",
+      "description": "프로젝트 진행 상황 리뷰",
+      "dueDate": "2025-05-20T15:00:00.000Z",
+      "priority": "low",
+      "repeat": false,
+      "category": "Work",
+      "tags": [
+        "Review",
+        "Project"
+      ],
       "completed": false
     },
     {
-      "id": "3735",
-      "title": "444",
+      "id": "1746778200744",
+      "title": "안녕",
+      "description": "12123",
+      "startDate": "2025-05-05T15:00:00.000Z",
+      "dueDate": "2025-05-09T15:00:00.000Z",
+      "priority": "normal",
+      "category": "Work",
+      "tags": [],
       "completed": false
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Work"
     },
     {
-      "id": "ad14",
-      "title": "44",
-      "completed": false
+      "id": "2",
+      "name": "Personal"
     },
     {
-      "id": "d5ab",
-      "title": "4ㅅ4ㅅ4",
-      "completed": false
+      "id": "3",
+      "name": "Study"
+    },
+    {
+      "id": "4",
+      "name": "General"
+    }
+  ],
+  "tags": [
+    {
+      "id": "1",
+      "name": "Meeting"
+    },
+    {
+      "id": "2",
+      "name": "Team"
+    },
+    {
+      "id": "3",
+      "name": "Study"
+    },
+    {
+      "id": "4",
+      "name": "React"
+    },
+    {
+      "id": "5",
+      "name": "Review"
+    },
+    {
+      "id": "6",
+      "name": "Project"
     }
   ]
 }
