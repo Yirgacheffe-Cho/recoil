@@ -1,13 +1,13 @@
 // hooks/useTodos.ts
-import { useRecoilState, useRecoilCallback } from "recoil";
-import { todoListState, Todo } from "../recoil/atoms";
-import { todoItemState } from "../recoil/families";
+import { useRecoilState, useRecoilCallback } from 'recoil';
+import { todoListState, Todo } from '../recoil/atoms';
+import { todoItemState } from '../recoil/families';
 import {
   fetchTodos as fetchAPI,
   createTodo,
   updateTodo,
   deleteTodo,
-} from "../services/todoService";
+} from '../services/todoService';
 
 export const useTodos = () => {
   const [todos, setTodos] = useRecoilState(todoListState);
@@ -25,10 +25,10 @@ export const useTodos = () => {
             set(todoItemState(todo.id), todo);
           });
         } catch (error) {
-          console.error("Failed to fetch todos:", error);
+          console.error('Failed to fetch todos:', error);
         }
       },
-    []
+    [],
   );
 
   // ➕ Todo 생성
@@ -40,10 +40,10 @@ export const useTodos = () => {
           set(todoItemState(newTodo.id), newTodo);
           setTodos((prev) => [...prev, newTodo]);
         } catch (error) {
-          console.error("Failed to create todo:", error);
+          console.error('Failed to create todo:', error);
         }
       },
-    [setTodos]
+    [setTodos],
   );
 
   // 🔄 Todo 상태 변경
@@ -60,10 +60,10 @@ export const useTodos = () => {
             }));
           }
         } catch (error) {
-          console.error("Failed to update todo:", error);
+          console.error('Failed to update todo:', error);
         }
       },
-    [todos]
+    [todos],
   );
 
   // ❌ Todo 삭제
@@ -75,10 +75,10 @@ export const useTodos = () => {
           reset(todoItemState(id));
           setTodos((prev) => prev.filter((todo) => todo.id !== id));
         } catch (error) {
-          console.error("Failed to delete todo:", error);
+          console.error('Failed to delete todo:', error);
         }
       },
-    [setTodos]
+    [setTodos],
   );
 
   // 🔄 반환 객체

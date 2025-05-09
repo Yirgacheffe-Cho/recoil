@@ -1,12 +1,14 @@
 // components/FilteredTodoList.tsx
-import React, { useState, startTransition,useEffect } from 'react';
+import React, { useState, startTransition, useEffect } from 'react';
 import { useTodos } from '../hooks/useTodos';
 import TodoItem from './TodoItem';
 
 const FilteredTodoList: React.FC = () => {
-  const { todos ,} = useTodos();
-  const [filter, setFilter] = useState<'all' | 'completed' | 'uncompleted'>('all');
-  const { fetchTodos } = useTodos(); 
+  const { todos } = useTodos();
+  const [filter, setFilter] = useState<'all' | 'completed' | 'uncompleted'>(
+    'all',
+  );
+  const { fetchTodos } = useTodos();
   const handleFilterChange = (value: 'all' | 'completed' | 'uncompleted') => {
     startTransition(() => {
       setFilter(value);
@@ -27,23 +29,29 @@ const FilteredTodoList: React.FC = () => {
   return (
     <div>
       <div className="flex gap-2 mb-4">
-        <button onClick={() => handleFilterChange('all')} className="px-3 py-1 bg-gray-300 rounded">
+        <button
+          onClick={() => handleFilterChange('all')}
+          className="px-3 py-1 bg-gray-300 rounded"
+        >
           All
         </button>
-        <button onClick={() => handleFilterChange('completed')} className="px-3 py-1 bg-gray-300 rounded">
+        <button
+          onClick={() => handleFilterChange('completed')}
+          className="px-3 py-1 bg-gray-300 rounded"
+        >
           Completed
         </button>
-        <button onClick={() => handleFilterChange('uncompleted')} className="px-3 py-1 bg-gray-300 rounded">
+        <button
+          onClick={() => handleFilterChange('uncompleted')}
+          className="px-3 py-1 bg-gray-300 rounded"
+        >
           Uncompleted
         </button>
       </div>
 
       <div className="grid gap-3">
         {filteredTodos.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            id={todo.id}
-          />
+          <TodoItem key={todo.id} id={todo.id} />
         ))}
       </div>
     </div>

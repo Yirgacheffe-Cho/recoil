@@ -7,10 +7,10 @@ export const todoListSelector = selector<Todo[]>({
   key: 'todoListSelector',
   get: async () => {
     try {
-      const todos = await fetchTodos();  // 🔥 Service 함수 사용
+      const todos = await fetchTodos(); // 🔥 Service 함수 사용
       return todos;
     } catch (error) {
-      console.error("Failed to fetch todos", error);
+      console.error('Failed to fetch todos', error);
       return [];
     }
   },
