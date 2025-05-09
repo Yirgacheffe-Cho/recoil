@@ -1,4 +1,3 @@
-// src/components/ScheduleModal.tsx
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -40,39 +39,39 @@ export default function ScheduleModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center">
-      <div className="bg-white p-5 rounded-md w-1/3">
-        <h2 className="text-xl mb-4">일정 생성</h2>
+      <div className="bg-white p-8 rounded-xl w-1/3 shadow-lg">
+        <h2 className="text-2xl font-bold mb-5 text-gray-700">📝 일정 생성</h2>
 
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="제목"
-          className="input mb-2 w-full"
+          className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
-        <input
+        <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="설명"
-          className="input mb-2 w-full"
+          className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
-        <div className="mb-2">
-          <label>시작일:</label>
+        <div className="mb-4">
+          <label className="block mb-1 text-gray-600">시작일:</label>
           <DatePicker
             selected={startDate ?? undefined}
             onChange={(date) => setStartDate(date as Date)}
-            className="input w-full"
+            className="w-full p-2 border border-gray-300 rounded-lg"
             placeholderText="시작일"
           />
         </div>
 
-        <div className="mb-2">
-          <label>마감일:</label>
+        <div className="mb-4">
+          <label className="block mb-1 text-gray-600">마감일:</label>
           <DatePicker
             selected={dueDate ?? undefined}
             onChange={(date) => setDueDate(date as Date)}
-            className="input w-full"
+            className="w-full p-2 border border-gray-300 rounded-lg"
             placeholderText="마감일"
           />
         </div>
@@ -80,18 +79,24 @@ export default function ScheduleModal({
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="input w-full"
+          className="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="General">General</option>
           <option value="Work">Work</option>
           <option value="Personal">Personal</option>
         </select>
 
-        <div className="flex justify-end mt-4 space-x-2">
-          <button onClick={handleSave} className="btn">
+        <div className="flex justify-end gap-3">
+          <button
+            onClick={handleSave}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          >
             저장하기
           </button>
-          <button onClick={onClose} className="btn">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"
+          >
             취소하기
           </button>
         </div>

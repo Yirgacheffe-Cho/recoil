@@ -7,24 +7,31 @@ export default function ScheduleList({ reload }: { reload: boolean }) {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="space-y-2">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
       {schedules.map((schedule) => (
-        <div key={schedule.id} className="p-3 border rounded-md">
-          <h3 className="text-lg font-bold">{schedule.title}</h3>
-          <p>{schedule.description}</p>
-          <p>
-            시작일:{' '}
+        <div
+          key={schedule.id}
+          className="p-5 bg-white border border-gray-200 rounded-xl shadow-md hover:shadow-lg"
+        >
+          <h3 className="text-xl font-semibold text-gray-800 mb-2">
+            {schedule.title}
+          </h3>
+          <p className="text-gray-600 mb-2">{schedule.description}</p>
+          <p className="text-sm text-gray-500">
+            📅 시작일:{' '}
             {schedule.startDate
               ? new Date(schedule.startDate).toLocaleDateString()
-              : 'No Start Date'}
+              : '없음'}
           </p>
-          <p>
-            마감일:{' '}
+          <p className="text-sm text-gray-500">
+            ⏰ 마감일:{' '}
             {schedule.dueDate
               ? new Date(schedule.dueDate).toLocaleDateString()
-              : 'No Due Date'}
+              : '없음'}
           </p>
-          <p>Category: {schedule.category}</p>
+          <span className="inline-block mt-2 px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full">
+            {schedule.category}
+          </span>
         </div>
       ))}
     </div>
