@@ -52,6 +52,12 @@ export default [
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
       'jsx-a11y/anchor-is-valid': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'warn', // 🔥 error 대신 warn으로 변경
+        {
+          argsIgnorePattern: '^_', // _로 시작하는 매개변수는 무시
+        },
+      ],
     },
   },
   {
