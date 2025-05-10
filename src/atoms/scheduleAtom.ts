@@ -1,16 +1,23 @@
 import { atomFamily } from 'recoil';
 
+export enum RepeatType {
+  NONE = 'none',
+  DAILY = 'daily',
+  WEEKLY = 'weekly',
+  MONTHLY = 'monthly',
+}
+
 export type ScheduleItem = {
-  id: string; // 일정 ID
-  title: string; // 제목
-  description: string; // 설명
+  id: string;
+  title: string;
+  description: string;
   startDate: Date | null;
-  dueDate: Date | null; // 마감일
-  priority: 'low' | 'normal' | 'high'; // 우선순위
-  repeat: boolean; // 반복 여부
-  category: string; // 카테고리
-  tags: string[]; // 태그
-  completed: boolean; // 완료 여부
+  dueDate: Date | null;
+  priority: 'low' | 'normal' | 'high';
+  category: string;
+  tags: string[];
+  completed: boolean;
+  repeat: RepeatType; // 🔥 반복 타입 추가
 };
 
 export const scheduleItemState = atomFamily<ScheduleItem, string>({
@@ -22,9 +29,9 @@ export const scheduleItemState = atomFamily<ScheduleItem, string>({
     startDate: null,
     dueDate: null,
     priority: 'normal',
-    repeat: false,
     category: 'General',
     tags: [],
     completed: false,
+    repeat: RepeatType.NONE,
   }),
 });
