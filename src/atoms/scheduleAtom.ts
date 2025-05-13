@@ -1,5 +1,7 @@
 import { atomFamily } from 'recoil';
 
+import { atom } from 'recoil';
+
 export enum RepeatType {
   NONE = 'none',
   DAILY = 'daily',
@@ -20,8 +22,8 @@ export type ScheduleItem = {
   repeat: RepeatType; // 🔥 반복 타입 추가
 };
 
-export const scheduleItemState = atomFamily<ScheduleItem, string>({
-  key: 'scheduleItemState',
+export const scheduleAtomFamily = atomFamily<ScheduleItem, string>({
+  key: 'scheduleAtomFamily',
   default: (id: string) => ({
     id,
     title: '',
@@ -34,4 +36,9 @@ export const scheduleItemState = atomFamily<ScheduleItem, string>({
     completed: false,
     repeat: RepeatType.NONE,
   }),
+});
+
+export const scheduleIdsState = atom<string[]>({
+  key: 'scheduleIdsState',
+  default: [],
 });

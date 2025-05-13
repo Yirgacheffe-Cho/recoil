@@ -1,31 +1,22 @@
-import { useEffect, useState } from 'react';
+// hooks/useSchedules.ts
+import { useRecoilCallback } from 'recoil';
 import {
   getSchedules,
   createSchedule as create,
 } from '../services/scheduleService';
-import { ScheduleItem } from '../atoms/scheduleAtom';
+import { scheduleAtomFamily, scheduleIdsState } from '../atoms/scheduleAtom';
 
-export const useSchedules = (reload: boolean) => {
-  const [schedules, setSchedules] = useState<ScheduleItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export const useSchedules = () => {
+  const loadSchedules = useRecoilCallback(({ set }) => async () => {
+    const data = await getSchedules();
+    set(
+      scheduleIdsState,
+      data.map((item) => item.id),
+    );
+    data.forEach((item) => {
+      set(scheduleAtomFamily(item.id), item);
+    });
+  });
 
-  const fetchSchedules = async () => {
-    try {
-      setLoading(true);
-      const data = await getSchedules();
-      setSchedules(data);
-    } catch (err) {
-      setError('일정 데이터를 불러오는 데 실패했습니다.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchSchedules();
-  }, [reload]);
-
-  // 🔥 createSchedule도 리턴하도록 추가
-  return { schedules, loading, error, createSchedule: create };
+  return { loadSchedules, createSchedule: create };
 };
