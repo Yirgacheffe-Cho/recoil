@@ -6,7 +6,7 @@ import { ScheduleItem, RepeatType } from '../atoms/scheduleAtom';
 
 interface ScheduleModalProps {
   isEdit: boolean;
-  schedule?: ScheduleItem;
+  schedule: ScheduleItem | null;
   onClose: () => void;
   onRefresh: () => void;
 }
