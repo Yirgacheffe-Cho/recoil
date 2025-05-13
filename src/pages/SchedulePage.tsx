@@ -26,8 +26,7 @@ export default function SchedulePage() {
   }, [reload]);
 
   const handleAdd = () => {
-    // setIsEdit(false);
-    // setSelectedSchedule(null);
+    setModal(ModalState.CREATE);
   };
 
   const handleRefresh = () => {
