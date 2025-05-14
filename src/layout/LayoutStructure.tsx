@@ -24,7 +24,7 @@ const LayoutStructure = () => {
             <TopBar />
 
             {/* 📌 페이지 전환 영역 */}
-            <div className="p-5 overflow-auto bg-gray-100">
+            <div className="flex-1 bg-gray-100 overflow-hidden">
               <Routes>
                 <Route path="/" element={<Navigate to="/calendar" />} />
                 <Route path="/calendar" element={<CalendarPage />} />

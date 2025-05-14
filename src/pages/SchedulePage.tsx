@@ -26,10 +26,6 @@ export default function SchedulePage() {
     loadSchedules();
   }, [reload]);
 
-  const handleAdd = () => {
-    setModal(ModalState.CREATE);
-  };
-
   const handleRefresh = () => {
     setReload(!reload); // 다시 로딩 트리거
   };
@@ -41,9 +37,6 @@ export default function SchedulePage() {
   return (
     <Suspense fallback={<Loading />}>
       <div className="p-5">
-        <button onClick={handleAdd} className="btn mb-4">
-          + 일정 추가하기
-        </button>
         <ScheduleList />
         {modal !== ModalState.NONE && (
           <ScheduleModal

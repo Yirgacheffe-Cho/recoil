@@ -1,10 +1,18 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  modalState,
+  ModalState,
+  selectedItemState,
+} from '../atoms/controlAtom';
 const TopBar = () => {
   // 📌 현재 경로를 추적하기 위해 useLocation 사용
   const location = useLocation();
-
+  const setModal = useSetRecoilState(modalState);
+  const handleAdd = () => {
+    setModal(ModalState.CREATE);
+  };
   // 🔍 현재 위치에 따라 타이틀을 설정
   const getTitle = () => {
     switch (location.pathname) {
@@ -27,7 +35,10 @@ const TopBar = () => {
     <div className="h-14 min-h-[60px] bg-gray-800 text-white flex items-center justify-between px-5">
       <div className="text-lg font-bold">{getTitle()}</div>
       <div className="flex items-center gap-4">
-        <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded">
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
+          onClick={handleAdd}
+        >
           새 일정 추가
         </button>
         <div className="bg-gray-700 px-4 py-2 rounded-full">👤 Admin</div>

@@ -48,6 +48,8 @@ const CalendarPage = () => {
           end: 'dayGridMonth,dayGridWeek,dayGridDay',
         }}
         eventClick={handleEventClick}
+        height="100%" // 🔥 화면 높이에 딱 맞추기
+        contentHeight="auto" // 🔥 오버플로우 없게 설정
       />
     </div>
   );
