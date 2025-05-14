@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { createSchedule, updateSchedule } from '../services/scheduleService';
+import { useSchedules } from '../hooks/useSchedules';
 import { ScheduleItem, RepeatType } from '../atoms/scheduleAtom';
 
 interface ScheduleModalProps {
   isEdit: boolean;
-  schedule?: ScheduleItem;
+  schedule: ScheduleItem | null;
   onClose: () => void;
   onRefresh: () => void;
 }
@@ -17,12 +17,14 @@ export default function ScheduleModal({
   onClose,
   onRefresh,
 }: ScheduleModalProps) {
+  const { createSchedule, updateSchedule } = useSchedules();
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [dueDate, setDueDate] = useState<Date | null>(null);
   const [category, setCategory] = useState('General');
-  const [repeat, setRepeat] = useState<RepeatType>(RepeatType.NONE); // 🔥 Repeat 초기값 설정
+  const [repeat, setRepeat] = useState<RepeatType>(RepeatType.NONE);
 
   // 🔥 수정 모드일 때 기존 값 로딩
   useEffect(() => {
@@ -36,6 +38,7 @@ export default function ScheduleModal({
     }
   }, [isEdit, schedule]);
 
+  // 🔥 생성 또는 수정 처리
   const handleSave = async () => {
     const newSchedule: ScheduleItem = {
       id: isEdit && schedule ? schedule.id : Date.now().toString(),
@@ -47,17 +50,17 @@ export default function ScheduleModal({
       category,
       tags: [],
       completed: false,
-      repeat: repeat ?? RepeatType.NONE, // 🔥 생성 시 Repeat 값 반영
+      repeat: repeat ?? RepeatType.NONE,
     };
 
-    if (isEdit && schedule) {
-      await updateSchedule(schedule.id, newSchedule);
+    if (isEdit) {
+      await updateSchedule(newSchedule.id, newSchedule);
     } else {
       await createSchedule(newSchedule);
     }
 
-    onRefresh();
-    onClose();
+    onRefresh(); // 🔥 부모 컴포넌트에서 리스트 리프레시
+    onClose(); // 🔥 모달 닫기
   };
 
   return (
@@ -109,7 +112,6 @@ export default function ScheduleModal({
           <option value="Personal">Personal</option>
         </select>
 
-        {/* 🔥 Repeat 옵션 추가 */}
         <select
           value={repeat}
           onChange={(e) => setRepeat(e.target.value as RepeatType)}

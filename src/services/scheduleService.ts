@@ -4,7 +4,7 @@ import { ScheduleItem } from '../atoms/scheduleAtom';
 
 const API_URL = 'http://localhost:5001/schedules';
 
-export const getSchedules = async (): Promise<ScheduleItem[]> => {
+export const getScheduleService = async (): Promise<ScheduleItem[]> => {
   try {
     const response = await axios.get(API_URL);
     return response.data;
@@ -14,7 +14,7 @@ export const getSchedules = async (): Promise<ScheduleItem[]> => {
   }
 };
 
-export const createSchedule = async (
+export const createScheduleService = async (
   schedule: ScheduleItem,
 ): Promise<ScheduleItem | null> => {
   try {
@@ -26,7 +26,7 @@ export const createSchedule = async (
   }
 };
 
-export const updateSchedule = async (
+export const updateScheduleService = async (
   id: string,
   schedule: ScheduleItem,
 ): Promise<ScheduleItem | null> => {
@@ -39,10 +39,10 @@ export const updateSchedule = async (
   }
 };
 
-export const deleteSchedule = async (id: string): Promise<boolean> => {
+export const deleteScheduleService = async (id: string): Promise<boolean> => {
   try {
     await axios.delete(`${API_URL}/${id}`);
-    return true;
+    return true; // 🔥 성공 시 true 반환
   } catch (error) {
     console.error('Failed to delete schedule:', error);
     return false;

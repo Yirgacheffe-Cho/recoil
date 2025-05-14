@@ -1,31 +1,72 @@
-import { useEffect, useState } from 'react';
+import { useRecoilCallback } from 'recoil';
 import {
-  getSchedules,
-  createSchedule as create,
+  scheduleAtomFamily,
+  scheduleIdsState,
+  ScheduleItem,
+} from '../atoms/scheduleAtom';
+import {
+  getScheduleService,
+  createScheduleService,
+  updateScheduleService,
+  deleteScheduleService,
 } from '../services/scheduleService';
-import { ScheduleItem } from '../atoms/scheduleAtom';
+export const useSchedules = () => {
+  // ✅ 초기 로딩
+  const loadSchedules = useRecoilCallback(({ set }) => async () => {
+    const data = await getScheduleService();
+    set(
+      scheduleIdsState,
+      data.map((item) => item.id),
+    );
+    data.forEach((item) => {
+      set(scheduleAtomFamily(item.id), item);
+    });
+  });
 
-export const useSchedules = (reload: boolean) => {
-  const [schedules, setSchedules] = useState<ScheduleItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // ✅ 생성
+  const createSchedule = useRecoilCallback(
+    ({ set }) =>
+      async (newItem: ScheduleItem) => {
+        const createdItem = await createScheduleService(newItem);
+        if (createdItem) {
+          set(scheduleIdsState, (prev) => [...prev, createdItem.id]);
+          set(scheduleAtomFamily(createdItem.id), createdItem);
+        }
+      },
+  );
 
-  const fetchSchedules = async () => {
-    try {
-      setLoading(true);
-      const data = await getSchedules();
-      setSchedules(data);
-    } catch (err) {
-      setError('일정 데이터를 불러오는 데 실패했습니다.');
-    } finally {
-      setLoading(false);
-    }
+  // ✅ 수정
+  const updateSchedule = useRecoilCallback(
+    ({ set }) =>
+      async (id: string, updatedData: ScheduleItem) => {
+        const currentData = await updateScheduleService(id, updatedData);
+        if (currentData) {
+          set(scheduleAtomFamily(id), (prev) => ({
+            ...prev,
+            ...updatedData,
+          }));
+        }
+      },
+  );
+
+  // ✅ 삭제
+  const deleteSchedule = useRecoilCallback(
+    ({ reset, set }) =>
+      async (id: string) => {
+        const isDeleted = await deleteScheduleService(id);
+        if (isDeleted) {
+          reset(scheduleAtomFamily(id));
+          set(scheduleIdsState, (prev) =>
+            prev.filter((itemId) => itemId !== id),
+          );
+        }
+      },
+  );
+
+  return {
+    loadSchedules,
+    createSchedule,
+    updateSchedule,
+    deleteSchedule,
   };
-
-  useEffect(() => {
-    fetchSchedules();
-  }, [reload]);
-
-  // 🔥 createSchedule도 리턴하도록 추가
-  return { schedules, loading, error, createSchedule: create };
 };
