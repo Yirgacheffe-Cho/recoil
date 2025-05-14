@@ -41,7 +41,6 @@ export default function SchedulePage() {
   return (
     <Suspense fallback={<Loading />}>
       <div className="p-5">
-        <h1 className="text-xl font-bold mb-4">📋 일정 관리</h1>
         <button onClick={handleAdd} className="btn mb-4">
           + 일정 추가하기
         </button>
