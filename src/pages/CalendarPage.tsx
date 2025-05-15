@@ -9,10 +9,12 @@ import {
   ModalState,
   selectedItemState,
 } from '../atoms/controlAtom';
+import { useUndoRedo } from '../hooks/useUndoRedo';
 import { scheduleSelector } from '../selectors/scheduleSelectors';
 
 const CalendarPage = () => {
   const events = useRecoilValue(calendarEventsSelector);
+  useUndoRedo(); // 🔥 간단하게 호출만 하면 된다!
   const setModal = useSetRecoilState(modalState);
   const setSelectedItemState = useSetRecoilState(selectedItemState);
 

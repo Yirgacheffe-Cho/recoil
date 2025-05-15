@@ -1,4 +1,8 @@
 import React from 'react';
+import { DeleteScheduleCommand } from '../commands/DeleteScheduleCommand';
+import { useCommand } from '../hooks/useCommand';
+import { useRecoilValue } from 'recoil';
+import { scheduleAtomFamily } from '../atoms/scheduleAtom';
 import { useSchedules } from '../hooks/useSchedules';
 
 interface DeleteConfirmationModalProps {
@@ -12,11 +16,16 @@ const DeleteConfirmationModal = ({
   title,
   onClose,
 }: DeleteConfirmationModalProps) => {
-  const { deleteSchedule } = useSchedules();
+  const { execute } = useCommand();
+  const schedule = useRecoilValue(scheduleAtomFamily(id)); // 기존 데이터를 백업
+  const schedules = useSchedules(); // 🔥 useSchedules 전체 주입
 
   const handleDelete = async () => {
-    await deleteSchedule(id);
-    onClose(); // 🔄 모달 닫기
+    if (schedule) {
+      const command = new DeleteScheduleCommand(id, schedule, schedules); // 🔥 schedules 주입
+      execute(command); // 🔥 Command 패턴으로 삭제 실행
+      onClose(); // 🔄 모달 닫기
+    }
   };
 
   return (

@@ -3,6 +3,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import ScheduleList from '../components/ScheduleList';
 import ScheduleModal from '../components/ScheduleModal';
 import { useSchedules } from '../hooks/useSchedules';
+import { useUndoRedo } from '../hooks/useUndoRedo';
 import {
   modalState,
   ModalState,
@@ -14,6 +15,7 @@ export default function SchedulePage() {
   const [reload, setReload] = useState(false);
 
   const setModal = useSetRecoilState(modalState);
+  useUndoRedo();
   const modal = useRecoilValue(modalState);
   const selectedSchedule = useRecoilValue(selectedItemState);
   const setSelectedItemState = useSetRecoilState(selectedItemState);
@@ -27,7 +29,7 @@ export default function SchedulePage() {
   }, [reload]);
 
   const handleRefresh = () => {
-    setReload(!reload); // 다시 로딩 트리거
+    // setReload(!reload); // 다시 로딩 트리거
   };
   const onClose = () => {
     setModal(ModalState.NONE);
