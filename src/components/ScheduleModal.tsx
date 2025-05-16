@@ -3,6 +3,9 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useSchedules } from '../hooks/useSchedules';
 import { ScheduleItem, RepeatType } from '../atoms/scheduleAtom';
+import { AddScheduleCommand } from '../commands/AddScheduleCommand';
+import { UpdateScheduleCommand } from '../commands/UpdateScheduleCommand';
+import { useCommand } from '../hooks/useCommand';
 
 interface ScheduleModalProps {
   isEdit: boolean;
@@ -17,7 +20,8 @@ export default function ScheduleModal({
   onClose,
   onRefresh,
 }: ScheduleModalProps) {
-  const { createSchedule, updateSchedule } = useSchedules();
+  const schedules = useSchedules();
+  const { execute } = useCommand();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -54,9 +58,19 @@ export default function ScheduleModal({
     };
 
     if (isEdit) {
-      await updateSchedule(newSchedule.id, newSchedule);
+      if (schedule) {
+        const command = new UpdateScheduleCommand(
+          newSchedule.id,
+          newSchedule,
+          schedule,
+          schedules,
+        );
+        execute(command);
+      }
     } else {
-      await createSchedule(newSchedule);
+      // 🔥 이제 schedules만 주입하면 알아서 내부에서 처리함
+      const command = new AddScheduleCommand(newSchedule, schedules);
+      execute(command);
     }
 
     onRefresh(); // 🔥 부모 컴포넌트에서 리스트 리프레시

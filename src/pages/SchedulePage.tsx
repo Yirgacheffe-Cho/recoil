@@ -1,18 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import ScheduleList from '../components/ScheduleList';
 import ScheduleModal from '../components/ScheduleModal';
 import { useSchedules } from '../hooks/useSchedules';
+import { useUndoRedo } from '../hooks/useUndoRedo';
 import {
   modalState,
   ModalState,
   selectedItemState,
-} from '../atoms/controlAtom'; // 🔥 한 파일에서만 import
+} from '../atoms/controlAtom';
+import { Loading } from '../components/Loading';
 
 export default function SchedulePage() {
   const [reload, setReload] = useState(false);
 
   const setModal = useSetRecoilState(modalState);
+  useUndoRedo();
   const modal = useRecoilValue(modalState);
   const selectedSchedule = useRecoilValue(selectedItemState);
   const setSelectedItemState = useSetRecoilState(selectedItemState);
@@ -25,12 +28,8 @@ export default function SchedulePage() {
     loadSchedules();
   }, [reload]);
 
-  const handleAdd = () => {
-    setModal(ModalState.CREATE);
-  };
-
   const handleRefresh = () => {
-    setReload(!reload); // 다시 로딩 트리거
+    // setReload(!reload); // 다시 로딩 트리거
   };
   const onClose = () => {
     setModal(ModalState.NONE);
@@ -38,20 +37,18 @@ export default function SchedulePage() {
   };
 
   return (
-    <div className="p-5">
-      <h1 className="text-xl font-bold mb-4">📋 일정 관리</h1>
-      <button onClick={handleAdd} className="btn mb-4">
-        + 일정 추가하기
-      </button>
-      <ScheduleList />
-      {modal !== ModalState.NONE && (
-        <ScheduleModal
-          isEdit={modal === ModalState.EDIT}
-          schedule={selectedSchedule}
-          onClose={onClose}
-          onRefresh={handleRefresh}
-        />
-      )}
-    </div>
+    <Suspense fallback={<Loading />}>
+      <div className="p-5">
+        <ScheduleList />
+        {modal !== ModalState.NONE && (
+          <ScheduleModal
+            isEdit={modal === ModalState.EDIT}
+            schedule={selectedSchedule}
+            onClose={onClose}
+            onRefresh={handleRefresh}
+          />
+        )}
+      </div>
+    </Suspense>
   );
 }

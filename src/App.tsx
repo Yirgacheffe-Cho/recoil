@@ -1,23 +1,13 @@
-// src/App.tsx
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
-import SchedulePage from './pages/SchedulePage';
-import { RecoilRoot } from 'recoil';
+import LayoutStructure from './layout/LayoutStructure';
 
-export default function App() {
+const App = () => {
   return (
-    <RecoilRoot>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Navigate to="/schedules" />} />
-          <Route path="/schedules" element={<SchedulePage />} />
-        </Routes>
-      </Router>
-    </RecoilRoot>
+    <div className="App">
+      {/* 📌 전체 레이아웃을 관리하는 LayoutStructure 컴포넌트 */}
+      <LayoutStructure />
+    </div>
   );
-}
+};
+
+export default App;

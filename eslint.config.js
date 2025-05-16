@@ -40,6 +40,9 @@ export default [
     languageOptions: {
       globals: {
         ...globals.browser,
+        console: 'readonly', // 🔥 console을 전역으로 허용
+        window: 'readonly', // 🔥 window 전역 객체 허용
+        document: 'readonly', // 🔥 document 전역 객체 허용
       },
     },
     settings: {
@@ -60,6 +63,7 @@ export default [
       ],
     },
   },
+
   {
     plugins: {
       prettier: prettierPlugin,
